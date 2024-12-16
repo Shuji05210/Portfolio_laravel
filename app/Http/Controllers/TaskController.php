@@ -58,16 +58,18 @@ class TaskController extends Controller
             return response()->json(['message' => 'データが見つかりませんでした'], 404);
         }
 
-        // リクエストから新しいデータ（title, description, priority）を取得
+        // リクエストから新しいデータを取得
         $data->title = $request->input('title');
         $data->description = $request->input('description');
         $data->priority = $request->input('priority');
         $data->due_date = $request->input('due_date');
+        $data->category_id = $request->input('category_id');
+        $data->taskstate_id = $request->input('taskstate_id');
 
         // 更新を保存
         $data->save();
 
-        return response()->json(['message' => 'データが正常に更新されました']);
+        return response()->json(['message' => 'データ更新サレタ'],[$data]);
     }
 
     //Individual ユーザー個別 タスク表示機能
