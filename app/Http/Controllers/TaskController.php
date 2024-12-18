@@ -68,8 +68,6 @@ class TaskController extends Controller
 
         // 更新を保存
         $data->save();
-
-        return response()->json(['message' => 'データ更新サレタ'],[$data]);
     }
 
     //Individual ユーザー個別 タスク表示機能
@@ -83,7 +81,7 @@ class TaskController extends Controller
             return response()->json(['message' => 'データが見つかりませんでした'], 404);
         }
     }
-    
+
     // 削除用機能
     public function delete($id)
     {
