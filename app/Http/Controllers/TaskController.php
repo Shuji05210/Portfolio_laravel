@@ -44,7 +44,10 @@ class TaskController extends Controller
         ]);
 
         //レスポンスとしてjson形式で値を返す
-        return response()->json($task, 201);
+        return response()->json([
+            'task' => $task,  // 作成したタスクデータを返す
+            'message' => '送信成功した',
+        ], 200);
     }
 
 
