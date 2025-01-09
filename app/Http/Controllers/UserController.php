@@ -35,8 +35,11 @@ class UserController extends Controller
         $validated = $request->validate([
             'name'     => 'required|string|max:255',  
             'email'    => 'required|string|unique:users,email',  
-            'password' => 'required|string|min:6',
+            'password' =>'required|string|min:6|confirmed', // password_confirmationと一致することを確認',
         ]);
+
+        //バリデーションに成功した場合 パスワードをハッシュ化
+        $validated ['password'] = Hash::make($validated['password']); 
 
         //バリデーションに成功したデータをデータベース上に作成する
         $user = User::create([
