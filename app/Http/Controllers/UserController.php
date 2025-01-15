@@ -14,8 +14,9 @@ class UserController extends Controller
 {
     public function index()
     {
-        return User::all();
+        $users = User::all();
         //Userテーブルの内容すべてを表示する
+        return response() -> json($users);
     }
 
     //IDに対応するものだけを表示 個別表示機能
@@ -35,7 +36,7 @@ class UserController extends Controller
         $validated = $request->validate([
             'name'     => 'required|string|max:255',  
             'email'    => 'required|string|unique:users,email',  
-            'password' =>'required|string|min:6|confirmed', // password_confirmationと一致することを確認',
+            'password' =>'required|string|min:6', 
         ]);
 
         //バリデーションに成功した場合 パスワードをハッシュ化
@@ -57,5 +58,12 @@ class UserController extends Controller
         return response()->json(['token' => $token], 201);
     }
 
-    
+    // ユーザーを削除
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return response()->json(['message' => 'ユーザーが削除されました']);
+    }
 }

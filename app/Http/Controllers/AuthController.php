@@ -36,6 +36,7 @@ class AuthController extends Controller
         return response()->json(['token' => $token], 201);
     }
 
+
     // ログイン
     public function login(Request $request)
     {
@@ -58,11 +59,14 @@ class AuthController extends Controller
         return response()->json(['token' => $token]);
     }
 
+
     // 認証されたユーザー情報の取得
     public function user(Request $request)
     {
         return response()->json($request->user());
     }
+
+
 
     // ログアウト
     public function logout(Request $request)

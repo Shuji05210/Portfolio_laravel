@@ -24,9 +24,13 @@ use Illuminate\Support\Facades\Route;
 
 //ログイン回り 2025/1/7(火)実装
 // ユーザー登録
-// Route::post('register', [AuthController::class, 'register']);
-
 Route::post('/users', [UserController::class, 'register']);
+
+//ユーザ情報取得
+Route::middleware('auth:sanctum')->get('/users', [UserController::class, 'index']);
+
+//ユーザ削除
+Route::middleware('auth:sanctum')->delete('/user/{id}', [UserController::class, 'destroy']);
 
 // ログイン
 Route::post('/login', [AuthController::class, 'login']);
