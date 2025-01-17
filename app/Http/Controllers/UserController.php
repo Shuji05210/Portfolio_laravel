@@ -61,9 +61,33 @@ class UserController extends Controller
     // ユーザーを削除
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
+        
+        if (!$user) {
+            return response()->json(['message' => 'ユーザーが見つかりません'], 404);
+        }
+        
         $user->delete();
 
         return response()->json(['message' => 'ユーザーが削除されました']);
+    }
+
+    //ユーザの編集
+    public function update(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'ユーザーが見つかりません'], 404);
+        }
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $id,
+        ]);
+
+        $user->update($validated);
+
+        return response()->json($user);
     }
 }

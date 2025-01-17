@@ -29,8 +29,11 @@ Route::post('/users', [UserController::class, 'register']);
 //ユーザ情報取得
 Route::middleware('auth:sanctum')->get('/users', [UserController::class, 'index']);
 
-//ユーザ削除
-Route::middleware('auth:sanctum')->delete('/user/{id}', [UserController::class, 'destroy']);
+//ユーザ情報更新
+Route::put('/users/{id}', [UserController::class, 'update']);
+
+//ユーザの削除
+Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
 // ログイン
 Route::post('/login', [AuthController::class, 'login']);
