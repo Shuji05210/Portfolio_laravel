@@ -35,8 +35,15 @@ Route::put('/users/{id}', [UserController::class, 'update']);
 //ユーザの削除
 Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
+
 // ログイン
 Route::post('/login', [AuthController::class, 'login']);
+
+// ログアウト
+Route::post('/logout', [AuthController::class, 'logout']);
+
+//ユーザーIDのリストを渡す用
+Route::get('/user-ids', [UserController::class, 'getUserId']);
 
 // 認証済みユーザーの情報取得
 Route::middleware('auth:sanctum')->get('user', [AuthController::class, 'user']);
@@ -45,16 +52,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// ログアウト
-Route::middleware('auth:sanctum')->post('logout', [AuthController::class, 'logout']);
-
-
 
 //APIでreactに渡す api/tasksにアクセス
 Route::get('/tasks', [TaskController::class, 'index']);
 
 //送信
-Route::post('/tasks', [TaskController::class, 'store']); 
+Route::post('/tasks', [TaskController::class, 'store']);
 
 // 編集と更新機能 11/29(金)追加
 Route::put('/tasks/{id}', [TaskController::class, 'update']);
@@ -65,7 +68,7 @@ Route::get('tasks/{task}', [TaskController::class, 'show']);
 
 //特定のユーザーのみのデータを指定して表示させる
 // {id}は引数
-Route::get('/userview/{id}',[TaskController::class, 'getTasksByUserId']);
+Route::get('/userview/{id}', [TaskController::class, 'getTasksByUserId']);
 
 
 //削除機能 12/4(水)
@@ -74,14 +77,14 @@ Route::delete('/delete/{id}', [TaskController::class, 'delete']);
 
 
 //users 一覧
-Route::get('/users',[UserController::class, 'index']);
+Route::get('/users', [UserController::class, 'index']);
 
 //usersテーブル 個別表示
-Route::get('/user/{id}',[UserController::class, 'getUserById']);
+Route::get('/user/{id}', [UserController::class, 'getUserById']);
 
 
 //category
 Route::get('/category', [CategoryController::class, 'index']);
 
 //taskstate
-Route::get('/state', [TaskStateController::class,'index']);
+Route::get('/state', [TaskStateController::class, 'index']);

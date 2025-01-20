@@ -90,4 +90,11 @@ class UserController extends Controller
 
         return response()->json($user);
     }
+
+    //UserテーブルのIDのリストを取得させる
+    public function getUserId()
+    {
+        $userId = User::pluck('id');  // UsersテーブルからIDを取得
+        return response()->json($userId);
+    }
 }
