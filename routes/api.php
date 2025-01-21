@@ -43,7 +43,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 //ユーザーIDのリストを渡す用
-Route::get('/user-ids', [UserController::class, 'getUserId']);
+Route::get('/users', [UserController::class, 'getUserId']);
 
 // 認証済みユーザーの情報取得
 Route::middleware('auth:sanctum')->get('user', [AuthController::class, 'user']);
