@@ -37,7 +37,7 @@ Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
 
 // ログイン
-Route::post('/users', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login']);
 
 // ログアウト
 Route::post('/logout', [AuthController::class, 'logout']);
@@ -46,12 +46,8 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/users', [UserController::class, 'getUserId']);
 
 
-// 認証済みユーザーの情報取得
-// Route::middleware('auth:sanctum')->get('user', [AuthController::class, 'user']);
+// 認証済みユーザーの情報取得(MiddleWare)
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
 
 //APIでreactに渡す api/tasksにアクセス
