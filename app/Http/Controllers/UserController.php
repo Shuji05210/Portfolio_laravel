@@ -16,7 +16,7 @@ class UserController extends Controller
     {
         $users = User::all();
         //Userテーブルの内容すべてを表示する
-        return response() -> json($users);
+        return response()->json($users);
     }
 
     //IDに対応するものだけを表示 個別表示機能
@@ -34,13 +34,13 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'name'     => 'required|string|max:255',  
-            'email'    => 'required|string|unique:users,email',  
-            'password' =>'required|string|min:6', 
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,',
+            'password' => 'required|string|min:6',
         ]);
 
         //バリデーションに成功した場合 パスワードをハッシュ化
-        $validated ['password'] = Hash::make($validated['password']); 
+        $validated['password'] = Hash::make($validated['password']);
 
         //バリデーションに成功したデータをデータベース上に作成する
         $user = User::create([
@@ -62,11 +62,11 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
-        
+
         if (!$user) {
             return response()->json(['message' => 'ユーザーが見つかりません'], 404);
         }
-        
+
         $user->delete();
 
         return response()->json(['message' => 'ユーザーが削除されました']);
@@ -83,18 +83,15 @@ class UserController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $id,
+            'email' => 'required|email|max:255|unique:users,email,',
+            'password' => 'required|string|min:6' . $id,
         ]);
-
+        
         $user->update($validated);
 
         return response()->json($user);
     }
 
     //UserテーブルのIDのリストを取得させる
-    public function getUserId()
-    {
-        $userId = User::pluck('id');  // UsersテーブルからIDを取得
-        return response()->json($userId);
-    }
+
 }

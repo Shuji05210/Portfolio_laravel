@@ -43,7 +43,6 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 //ユーザーIDのリストを渡す用
-Route::get('/users', [UserController::class, 'getUserId']);
 
 
 // 認証済みユーザーの情報取得(MiddleWare)
@@ -85,3 +84,4 @@ Route::get('/category', [CategoryController::class, 'index']);
 
 //taskstate
 Route::get('/state', [TaskStateController::class, 'index']);
+
