@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable; //ユーザ認証用 Modelの拡張
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends Model
+
+class User extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, HasApiTokens;  // HasApiTokensを使う
 
     protected $fillable = [
         'name', 
@@ -20,4 +23,5 @@ class User extends Model
     {
         return $this->hasMany(Task::class);
     }
+    
 }

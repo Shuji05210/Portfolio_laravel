@@ -39,7 +39,7 @@ class UserController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
-        //バリデーションに成功した場合 パスワードをハッシュ化
+        //バリデーションに成功した場合 パスワードをハッシュ化(特定できないようにしておく)
         $validated['password'] = Hash::make($validated['password']);
 
         //バリデーションに成功したデータをデータベース上に作成する
@@ -75,11 +75,13 @@ class UserController extends Controller
     //ユーザの編集
     public function update(Request $request, $id)
     {
+        //編集するユーザを特定する idを引数として
         $user = User::find($id);
 
         if (!$user) {
             return response()->json(['message' => 'ユーザーが見つかりません'], 404);
         }
+
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',

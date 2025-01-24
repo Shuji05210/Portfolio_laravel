@@ -36,16 +36,12 @@ Route::put('/users/{id}', [UserController::class, 'update']);
 Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
 
-// ログイン
-Route::post('/login', [AuthController::class, 'login']);
+//ログインなどのルーティング
+Route::post('login', [AuthController::class, 'login']);
+Route::post('logout', [AuthController::class, 'logout']);
 
-// ログアウト
-Route::post('/logout', [AuthController::class, 'logout']);
-
-//ユーザーIDのリストを渡す用
-
-
-// 認証済みユーザーの情報取得(MiddleWare)
+//ミドルウェアによる認証
+Route::get('userinfo', [AuthController::class, 'userinfo'])->middleware('auth:sanctum');
 
 
 
