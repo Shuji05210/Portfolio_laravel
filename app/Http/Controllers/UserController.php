@@ -81,12 +81,12 @@ class UserController extends Controller
         if (!$user) {
             return response()->json(['message' => 'ユーザーが見つかりません'], 404);
         }
-
+        
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,',
-            'password' => 'required|string|min:6' . $id,
+            'password' => 'required|string|min:6',
         ]);
         
         $user->update($validated);

@@ -38,7 +38,8 @@ Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
 //ログインなどのルーティング
 Route::post('login', [AuthController::class, 'login']);
-Route::post('logout', [AuthController::class, 'logout']);
+//ログアウト (トークンの削除処理 認証ミドルウェアを挟む)
+Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 //ミドルウェアによる認証
 Route::get('userinfo', [AuthController::class, 'userinfo'])->middleware('auth:sanctum');

@@ -41,14 +41,27 @@ class AuthController extends Controller
         return response()->json($request->user());
     }
 
-    // ログアウト
     public function logout(Request $request)
     {
-        // ユーザーのトークンを削除
-        $request->user()->tokens->each(function ($token) {
-            $token->delete();
-        });
+        $user = $request->user();
 
-        return response()->json(['message' => 'ログアウトしました']);
+        if (!$user) {
+            return response()->json(['error' => '認証されていません'], 401);
+        }
+
+        try {
+            // トークンの取得
+            $tokens = $user->tokens;
+
+            // ユーザーのトークンを削除
+            $tokens->each(function ($token) {
+                $token->delete();
+            });
+
+            return response()->json(['message' => 'ログアウトしました']);
+        } catch (\Exception $e) {
+            // エラー内容をそのままレスポンスとして返す
+            return response()->json(['error' => 'ログアウト中にエラーが発生しました: ' . $e->getMessage()], 500);
+        }
     }
 }
