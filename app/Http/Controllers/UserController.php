@@ -81,14 +81,22 @@ class UserController extends Controller
         if (!$user) {
             return response()->json(['message' => 'ユーザーが見つかりません'], 404);
         }
-        
+
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' .$id,
+            'email' => 'required|email|max:255|unique:users,email,' . $id,
             'password' => 'nullable|string|min:6',
         ]);
-        
+
+        // パスワードが提供されていない場合は更新しない
+        if (empty($validated['password'])) {
+            unset($validated['password']);
+        } else {
+            // パスワードが提供されている場合はハッシュ化
+            $validated['password'] = bcrypt($validated['password']);
+        }
+
         $user->update($validated);
 
         return response()->json($user);
